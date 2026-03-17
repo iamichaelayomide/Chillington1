@@ -1,32 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import CartDrawer from "@/components/CartDrawer";
-import Footer from "@/components/Footer";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Chillington Bites | Hot Shawarma in Akure",
-  description: "Order the best shawarma in Akure online. Fast delivery and simple WhatsApp ordering.",
+  title: "Chillington Bites | Shawarma Delivery in Akure",
+  description: "Fast single-page shawarma ordering experience for Chillington Bites, Akure.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <Navbar />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer />
-        <CartDrawer />
-      </body>
+    <html lang="en" suppressHydrationWarning>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }

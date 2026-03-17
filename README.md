@@ -1,54 +1,74 @@
-# Chillington Bites - Shawarma Ordering Website
+# Chillington Bites
 
-A modern, high-converting shawarma ordering website for Chillington Bites in Akure. Built with Next.js App Router, Tailwind CSS, Zustand, and Supabase.
+Production-ready single-page shawarma ordering app for Chillington Bites, Akure. Built with Next.js App Router, TypeScript, Tailwind CSS, Supabase, Zod, React Hook Form and Zustand.
 
 ## Features
-- **Fast Menu Browsing:** Mobile-first design for quick ordering.
-- **WhatsApp Checkout:** Seamless checkout flow that formats orders and redirects to WhatsApp.
-- **Admin Dashboard:** Manage products, track orders, and view stats.
-- **Cart Management:** Persistent shopping cart using Zustand.
 
-## Tech Stack
-- Next.js (App Router)
-- React & TypeScript
-- Tailwind CSS
-- Supabase (PostgreSQL)
-- Zustand (State Management)
-- React Hook Form & Zod (Validation)
+- Single-page mobile-first ordering flow
+- Category tabs, product modal, size and extra customization
+- Persistent cart with localStorage
+- WhatsApp checkout with dynamic order message
+- Optional order saving to Supabase
+- Protected admin dashboard for products, extras, promotions and orders
+- Supabase Storage image uploads for product images
 
-## Setup Instructions
+## Admin credentials
 
-### 1. Install Dependencies
+- Email: `admin@chillingtonbites.com`
+- Password: `ChillingtonBites2026!`
+
+Create the auth user after configuring Supabase:
+
+```bash
+node scripts/create-admin.mjs
+```
+
+## Environment variables
+
+Copy `.env.example` to `.env.local` and fill in the values:
+
+```bash
+cp .env.example .env.local
+```
+
+Required values:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `NEXT_PUBLIC_WHATSAPP_NUMBER`
+- `ADMIN_EMAIL`
+- `ADMIN_PASSWORD`
+
+## Supabase setup
+
+1. Create a Supabase project.
+2. Run [`supabase/schema.sql`](/C:/Users/DELL/chillington-bites/supabase/schema.sql).
+3. Run [`supabase/seed.sql`](/C:/Users/DELL/chillington-bites/supabase/seed.sql).
+4. Add environment variables to `.env.local`.
+5. Run `node scripts/create-admin.mjs`.
+
+## Run locally
+
 ```bash
 npm install
-```
-
-### 2. Environment Variables
-Check the `.env.local` file in the root directory and add your real Supabase credentials and WhatsApp number:
-```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-NEXT_PUBLIC_WHATSAPP_NUMBER=2348000000000
-```
-
-### 3. Database Setup (Supabase)
-1. Go to your Supabase project dashboard.
-2. Open the SQL Editor.
-3. Copy the contents of `supabase/migrations/00000_init.sql` and run it to create the necessary tables and RLS policies.
-
-### 4. Seed Data
-To populate the database with realistic menu items:
-```bash
-node scripts/seed.js
-```
-*(Ensure your `.env.local` has valid Supabase credentials before running the seed script.)*
-
-### 5. Run the Application
-```bash
 npm run dev
 ```
-Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Admin Access
-- **URL:** `/admin`
-- **Password:** `admin123` (Hardcoded for demo purposes)
+Open `http://localhost:3000`.
+
+## Routes
+
+- `/` customer ordering experience
+- `/admin/login` protected login
+- `/admin/products`
+- `/admin/orders`
+- `/admin/extras`
+- `/admin/promotions`
+
+## Notes
+
+- If Supabase is not configured, the homepage falls back to seeded local menu data so the frontend still renders.
+- Admin pages and persistent database writes require Supabase configuration.
+- Product image uploads write to the `product-images` storage bucket defined in the schema.
+- The default WhatsApp checkout target is `07032891651`, stored in international format as `2347032891651`.
